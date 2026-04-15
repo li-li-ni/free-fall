@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自由落体时间计算器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        button {
+            padding: 12px 30px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .result-value {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            color: #3498db;
+        }
+        
+        .formula {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .formula h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .formula p {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            color: #34495e;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>自由落体时间计算器</h1>
+        <div class="intro">
+            <p>输入物体下落的高度，计算自由落体所需的时间。</p>
+            <p>计算公式：t = √(2h/g)，其中g = 9.8 m/s²</p>
+        </div>
+        
+        <div class="form-group">
+            <label for="height">高度 (米):</label>
+            <input type="number" id="height" placeholder="请输入高度" min="0" step="0.1">
+        </div>
+        
+        <div class="button-container">
+            <button id="calculate-btn">计算时间</button>
+        </div>
+        
+        <div class="result" id="result">
+            <h2>计算结果</h2>
+            <div class="result-value" id="time-result"></div>
+            <div class="formula">
+                <h3>计算公式</h3>
+                <p>t = √(2h/g)</p>
+                <p>其中：h = 高度 (米)</p>
+                <p>g = 重力加速度 = 9.8 m/s²</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 重力加速度
+        const g = 9.8;
+        
+        // DOM元素
+        const heightInput = document.getElementById('height');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultDiv = document.getElementById('result');
+        const timeResult = document.getElementById('time-result');
+        
+        // 计算按钮点击事件
+        calculateBtn.addEventListener('click', function() {
+            const height = parseFloat(heightInput.value);
+            
+            // 验证输入
+            if (isNaN(height) || height < 0) {
+                alert('请输入有效的高度值');
+                return;
+            }
+            
+            // 计算自由落体时间
+            const time = Math.sqrt(2 * height / g);
+            
+            // 显示结果
+            timeResult.textContent = `自由落体时间：${time.toFixed(4)} 秒`;
+            resultDiv.style.display = 'block';
+        });
+        
+        // 回车键触发计算
+        heightInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
